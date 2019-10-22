@@ -5,6 +5,13 @@ export default class AddAdmin extends Component {
     
     constructor(props) {
         super(props);
+        
+        this.onChangeAdminDescription = this.onChangeAdminDescription.bind(this);
+        this.onChangeAdminResponsible = this.onChangeAdminResponsible.bind(this);
+        this.onChangeAdminPriority = this.onChangeAdminPriority.bind(this);
+        this.onChangeAdminCompleted = this.onChangeAdminCompleted.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
 
         this.state = {
             admin_description: '',
@@ -29,6 +36,44 @@ export default class AddAdmin extends Component {
             })
     }
     
+    onChangeAdminDescription(e) {
+        this.setState({
+            admin_description: e.target.value
+        });
+    }
+
+    onChangeAdminResponsible(e) {
+        this.setState({
+            admin_responsible: e.target.value
+        });
+    }
+
+    onChangeAdminPriority(e) {
+        this.setState({
+            admin_priority: e.target.value
+        });
+    }
+
+    onChangeTodoCompleted(e) {
+        this.setState({
+            admin_completed: !this.state.admin_completed
+        });
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const obj = {
+            admin_description: this.state.admin_description,
+            admin_responsible: this.state.admin_responsible,
+            admin_priority: this.state.admin_priority,
+            admin_completed: this.state.admin_completed
+};
+        console.log(obj);
+        axios.post('http://localhost:4000/todos/update/'+this.props.match.params.id, obj)
+            .then(res => console.log(res.data));
+        
+        this.props.history.push('/');
+    }
     
     render() {
         return (
@@ -110,3 +155,4 @@ export default class AddAdmin extends Component {
             </div>
         )
     }
+}
