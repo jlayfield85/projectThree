@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 
 export default class CreateAdmin extends Component {
 
@@ -45,6 +47,15 @@ export default class CreateAdmin extends Component {
         console.log(`New Admin Priority: ${this.state.admin_priority}`);
         console.log(`New Admin Completed: ${this.state.admin_completed}`);
 
+        const newAdmin = {
+            admin_description: this.state.admin_description,
+            admin_responsible: this.state_admin_responsible,
+            todo_priority: this.state.admin_priority,
+            todo_completed: this.state.admin_completed
+        }
+
+        axios.post('http://localhost:4000/ratemyadmin/add', newAdmin)
+            .then(res => console.log(res.data));
 
         this.setState({
             admin_description: '',
